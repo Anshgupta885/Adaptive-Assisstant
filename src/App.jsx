@@ -7,6 +7,7 @@ import { VoiceInteraction } from './components/VoiceInteraction';
 import { ProfilesTimeline } from './components/ProfilesTimeline';
 import { SettingsHub } from './components/SettingsHub';
 import { PrivacyEthics } from './components/PrivacyEthics';
+import { Login } from './components/Login';
 
 const AppContext = createContext(null);
 
@@ -98,6 +99,7 @@ export default function App() {
         {currentScreen === 'profiles' && <ProfilesTimeline />}
         {currentScreen === 'settings' && <SettingsHub />}
         {currentScreen === 'privacy' && <PrivacyEthics />}
+        {currentScreen === 'login' && <Login />}
       </div>
     </AppContext.Provider>
   );

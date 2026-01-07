@@ -7,11 +7,14 @@ import {
   HandHeart, 
   Mic, 
   Shield,
-  Settings 
+  Settings,
+  LogIn,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export function WelcomeScreen() {
-  const { setCurrentScreen, isDarkMode, reduceMotion } = useApp();
+  const { setCurrentScreen, isDarkMode, setIsDarkMode, reduceMotion } = useApp();
 
   const floatingIcons = [
     { Icon: Eye, delay: 0, x: '10%', y: '20%' },
@@ -23,6 +26,33 @@ export function WelcomeScreen() {
 
   return (
     <div className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center p-6">
+      {/* Top Right Actions */}
+      <div className="absolute top-6 right-6 z-20 flex items-center gap-3">
+        <button
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className={`p-2 rounded-xl transition-all hover:scale-110 active:scale-95 ${
+            isDarkMode 
+              ? 'bg-white/10 text-yellow-400 hover:bg-white/20' 
+              : 'bg-white/60 text-slate-700 hover:bg-white/80'
+          }`}
+          aria-label="Toggle Theme"
+        >
+          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
+
+        <button
+          onClick={() => setCurrentScreen('login')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-colors ${
+            isDarkMode 
+              ? 'bg-white/10 text-white hover:bg-white/20' 
+              : 'bg-white/60 text-slate-700 hover:bg-white/80'
+          }`}
+        >
+          <LogIn size={18} />
+          <span>Login</span>
+        </button>
+      </div>
+
       {/* Floating Icons Background */}
       {!reduceMotion && floatingIcons.map(({ Icon, delay, x, y }, index) => (
         <motion.div

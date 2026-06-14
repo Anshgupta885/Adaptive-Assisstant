@@ -8,6 +8,8 @@ import { ProfilesTimeline } from './components/ProfilesTimeline';
 import { SettingsHub } from './components/SettingsHub';
 import { PrivacyEthics } from './components/PrivacyEthics';
 import { Login } from './components/Login';
+import { UserDashboard } from './components/UserDashboard';
+import { Toaster, toast } from 'sonner';
 
 const AppContext = createContext(null);
 
@@ -19,10 +21,11 @@ export const useApp = () => {
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('welcome');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode] = useState(true);
   const [isHighContrast, setIsHighContrast] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [user, setUser] = useState(null);
   const [modes, setModes] = useState([
     {
       id: 'recovery',
@@ -62,11 +65,17 @@ export default function App() {
     ));
   };
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+    setCurrentScreen('welcome');
+    toast.success('Logged out successfully');
+  };
+
   const contextValue = {
     currentScreen,
     setCurrentScreen,
     isDarkMode,
-    setIsDarkMode,
     isHighContrast,
     setIsHighContrast,
     fontSize,
@@ -75,18 +84,25 @@ export default function App() {
     setReduceMotion,
     modes,
     toggleMode,
+    user,
+    setUser,
+    logout,
   };
 
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('dark');
+    // Check if user is already logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      // For now, we just set a dummy user object if token exists
+      // In a real app, you'd verify the token with the backend
+      setUser({ loggedIn: true });
     }
-  }, [isDarkMode]);
+  }, []);
 
   return (
     <AppContext.Provider value={contextValue}>
+      <Toaster position="top-center" richColors />
       <div
         className="min-h-screen transition-colors duration-500"
         style={{ fontSize: `${fontSize}px` }}
@@ -100,6 +116,7 @@ export default function App() {
         {currentScreen === 'settings' && <SettingsHub />}
         {currentScreen === 'privacy' && <PrivacyEthics />}
         {currentScreen === 'login' && <Login />}
+        {currentScreen === 'dashboard' && <UserDashboard />}
       </div>
     </AppContext.Provider>
   );

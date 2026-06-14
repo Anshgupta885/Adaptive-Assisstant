@@ -15,7 +15,6 @@ export function SettingsHub() {
   const { 
     setCurrentScreen, 
     isDarkMode, 
-    setIsDarkMode,
     isHighContrast,
     setIsHighContrast,
     fontSize,
@@ -99,69 +98,6 @@ export function SettingsHub() {
 
         {/* Settings */}
         <div className="space-y-4">
-          {/* Theme Toggle */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className={`p-6 rounded-2xl border ${
-              isDarkMode
-                ? 'bg-white/5 backdrop-blur-xl border-white/10'
-                : 'bg-white/60 backdrop-blur-xl border-white/50'
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                {isDarkMode ? (
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-slate-600 to-slate-700">
-                    <Moon size={24} className="text-white" />
-                  </div>
-                ) : (
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-400">
-                    <Sun size={24} className="text-white" />
-                  </div>
-                )}
-                <div>
-                  <h3 className={`font-semibold ${
-                    isDarkMode ? 'text-white' : 'text-slate-900'
-                  }`}>
-                    Theme Mode
-                  </h3>
-                  <p className={`text-sm ${
-                    isDarkMode ? 'text-slate-400' : 'text-slate-600'
-                  }`}>
-                    {isDarkMode ? 'Dark mode active' : 'Light mode active'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setIsDarkMode(false)}
-                  className={`p-3 rounded-xl transition-all ${
-                    !isDarkMode
-                      ? 'bg-gradient-to-br from-yellow-400 to-orange-400 text-white shadow-lg scale-110'
-                      : isDarkMode
-                        ? 'bg-white/10 text-white hover:bg-white/20'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                >
-                  <Sun size={20} />
-                </button>
-                <button
-                  onClick={() => setIsDarkMode(true)}
-                  className={`p-3 rounded-xl transition-all ${
-                    isDarkMode
-                      ? 'bg-gradient-to-br from-slate-600 to-slate-700 text-white shadow-lg scale-110'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                >
-                  <Moon size={20} />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-
           {/* High Contrast */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
